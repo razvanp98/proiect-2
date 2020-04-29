@@ -18,8 +18,11 @@ import javafx.stage.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.DecimalFormat;
 
 public class Run extends Application {
 
@@ -35,22 +38,38 @@ public class Run extends Application {
     private static Image resultImg;
 
     public static void setErrorRate() {
-        long originalValue = 0;
-        long resultValue = 0;
-        double error = 0;
+        double sum = 0;
+        double redOrig, greenOrig, blueOrig, redRes, greenRes, blueRes;
+        double redDiff, greenDiff, blueDiff, sumDiff;
 
-        for(int j = 0; j < height; j++) {
-            for(int i = 0; i < width; i++) {
-                PixelReader originalReader = Run.originalImg.getPixelReader();
-                PixelReader resultReader = Run.resultImg.getPixelReader();
+        // Get image pixels readers
+        PixelReader originalReader = Run.originalImg.getPixelReader();
+        PixelReader resultReader = Run.resultImg.getPixelReader();
 
-                originalValue += Math.abs(originalReader.getArgb(i, j));
-                resultValue += Math.abs(resultReader.getArgb(i, j));
+        for(int i = 0; i < width; i++) {
+            for(int j = 0; j < height; j++) {
+                int originalVal = originalReader.getArgb(i, j);
+                int resultVal = resultReader.getArgb(i, j);
+
+                redOrig = (originalVal) >> 16 & 0x000000FF;
+                greenOrig = (originalVal) >> 8 & 0x000000FF;
+                blueOrig = (originalVal) & 0x000000FF;
+
+                redRes = (resultVal) >> 16 & 0x000000FF;
+                greenRes = (resultVal) >> 8 & 0x000000FF;
+                blueRes = (resultVal) & 0x000000FF;
+
+                redDiff = Math.pow(redOrig - redRes, 2);
+                greenDiff = Math.pow(greenOrig - greenRes, 2);
+                blueDiff = Math.pow(blueOrig - blueRes, 2);
+
+                sumDiff = redDiff + greenDiff + blueDiff;
+
+                sum += sumDiff;
             }
         }
 
-        error = (double) (originalValue - resultValue) / originalValue;
-        Run.error = Math.abs(error) * 100;
+        Run.error = sum / (Run.width * Run.height);
     }
 
     @Override
@@ -193,8 +212,9 @@ public class Run extends Application {
                     // Set result image for error calculation
                     Run.resultImg = shownImg;
 
+                    // Output approximation error
                     Run.setErrorRate();
-                    System.out.println(Run.error + " %");
+                    System.out.println(Run.error + "%");
 
                 } catch(Exception e) {
                     e.printStackTrace();
