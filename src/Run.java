@@ -29,6 +29,7 @@ public class Run extends Application {
     private static double width;
     private static double height;
     private static double error;
+    private static int distinctColors = 0;
     private static int k;
     private static String originalPath;
     private static String destPath;
@@ -36,6 +37,7 @@ public class Run extends Application {
     private static String extension;
     private static Image originalImg;
     private static Image resultImg;
+
 
     public static void setErrorRate() {
         double sum = 0;
@@ -95,7 +97,7 @@ public class Run extends Application {
 
                 VBox vboxContainer; // Load below
                 Scene scene;
-                Label pathLabel; // load below
+                Label pathLabel, distinctColorsLabel; // load below
                 ImageView iView; // load below
                 Parent originalImgRoot = null;
                 FileChooser loader = new FileChooser(); // Pop-up dialog for file choosing
@@ -115,6 +117,8 @@ public class Run extends Application {
 
                 pathLabel = (Label) startRoot.lookup("#imgPath");
                 pathLabel.setText(imgPath);
+
+                distinctColorsLabel = (Label) startRoot.lookup("#distinctColorsLabel");
 
                 Image shownImg = null;
 
@@ -136,16 +140,19 @@ public class Run extends Application {
 
                     // Create new JavaFX image
                     shownImg = new Image(new FileInputStream(Run.originalPath));
+                    Run.width = shownImg.getWidth();
+                    Run.height = shownImg.getHeight();
 
-                    // Set image reference for error calculation
+                    // Set image reference in class
                     Run.originalImg = shownImg;
+
+                    getDistinctColors(); // Numara culorile distincte din imagine
+
+                    distinctColorsLabel.setText(String.valueOf(Run.distinctColors));
 
                 } catch(Exception e) {
                     e.printStackTrace();
                 }
-
-                Run.width = shownImg.getWidth();
-                Run.height = shownImg.getHeight();
 
                 vboxContainer.setPrefWidth(0.5 * Run.width);
                 vboxContainer.setPrefHeight(0.5 * Run.height);
@@ -182,6 +189,7 @@ public class Run extends Application {
                 Scene scene;
                 TextField kField; // Load below
                 ImageView iView; // Load below
+                Label errorLabel;
                 Parent resultImgRoot = null;
                 Stage stage = new Stage();
 
@@ -194,6 +202,7 @@ public class Run extends Application {
                 vboxContainer = (VBox) resultImgRoot.lookup("#vboxContainer");
                 iView = (ImageView) resultImgRoot.lookup("#imgViewer");
                 kField = (TextField) startRoot.lookup("#kNumber");
+                errorLabel = (Label) startRoot.lookup("#errorRateLabel");
 
                 // Set k cluster number from input
                 Run.k = Integer.parseInt(kField.getText());
@@ -214,7 +223,14 @@ public class Run extends Application {
 
                     // Output approximation error
                     Run.setErrorRate();
-                    System.out.println(Run.error + "%");
+
+                    // Build error string
+
+                    StringBuilder errorBuilder = new StringBuilder();
+
+                    errorBuilder.append(Run.error).append(" %");
+
+                    errorLabel.setText(errorBuilder.toString());
 
                 } catch(Exception e) {
                     e.printStackTrace();
@@ -243,6 +259,22 @@ public class Run extends Application {
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
+    }
+
+    // Numara culorile distincte din imagine
+    public void getDistinctColors() {
+        int prev = 0;
+        PixelReader reader = Run.originalImg.getPixelReader();
+
+        for(int j = 0; j < Run.height; j++) {
+            for(int i = 0; i < Run.width; i++) {
+
+                if(reader.getArgb(i, j) != prev) {
+                    prev = reader.getArgb(i, j);
+                    Run.distinctColors++;
+                }
+            }
+        }
     }
 
     public static void main(String[] args) {
