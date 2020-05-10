@@ -146,8 +146,7 @@ public class Run extends Application {
                     // Set image reference in class
                     Run.originalImg = shownImg;
 
-                    getDistinctColors(); // Numara culorile distincte din imagine
-
+                    getDistinctColors();
                     distinctColorsLabel.setText(String.valueOf(Run.distinctColors));
 
                 } catch(Exception e) {
@@ -166,11 +165,16 @@ public class Run extends Application {
                 stage.setTitle("Original Image");
                 stage.setScene(scene);
 
-                // Reset path label to default on stage close
+                // Reset path label and distinct colors label
+
                 stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
                     @Override
                     public void handle(WindowEvent windowEvent) {
                         pathLabel.setText("null");
+                        distinctColorsLabel.setText("0");
+                        // Reset reference and set distinct colors back to 0
+                        Run.originalImg = null;
+                        Run.distinctColors = 0;
                     }
                 });
                 stage.show();
@@ -250,6 +254,15 @@ public class Run extends Application {
                 scene = new Scene(resultImgRoot, 0.5 * Run.width, 0.5 * Run.height);
                 stage.setTitle("Result Image");
                 stage.setScene(scene);
+
+                stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                    @Override
+                    public void handle(WindowEvent windowEvent) {
+                        Run.error = 0;
+                        errorLabel.setText("0 %");
+                    }
+                });
+
                 stage.show();
             }
         });
