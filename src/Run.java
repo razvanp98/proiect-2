@@ -23,6 +23,7 @@ import java.math.RoundingMode;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.DecimalFormat;
+import java.util.concurrent.TimeUnit;
 
 public class Run extends Application {
 
@@ -97,7 +98,7 @@ public class Run extends Application {
 
                 VBox vboxContainer; // Load below
                 Scene scene;
-                Label pathLabel, distinctColorsLabel; // load below
+                Label pathLabel, distinctColorsLabel, sizeLabel; // load below
                 ImageView iView; // load below
                 Parent originalImgRoot = null;
                 FileChooser loader = new FileChooser(); // Pop-up dialog for file choosing
@@ -117,8 +118,8 @@ public class Run extends Application {
 
                 pathLabel = (Label) startRoot.lookup("#imgPath");
                 pathLabel.setText(imgPath);
-
                 distinctColorsLabel = (Label) startRoot.lookup("#distinctColorsLabel");
+                sizeLabel = (Label) startRoot.lookup("#sizeLabel");
 
                 Image shownImg = null;
 
@@ -148,6 +149,7 @@ public class Run extends Application {
 
                     getDistinctColors();
                     distinctColorsLabel.setText(String.valueOf(Run.distinctColors));
+                    sizeLabel.setText((int)Run.width + "x" + (int)Run.height);
 
                 } catch(Exception e) {
                     e.printStackTrace();
@@ -172,6 +174,8 @@ public class Run extends Application {
                     public void handle(WindowEvent windowEvent) {
                         pathLabel.setText("null");
                         distinctColorsLabel.setText("0");
+                        sizeLabel.setText("0");
+
                         // Reset reference and set distinct colors back to 0
                         Run.originalImg = null;
                         Run.distinctColors = 0;
@@ -193,7 +197,7 @@ public class Run extends Application {
                 Scene scene;
                 TextField kField; // Load below
                 ImageView iView; // Load below
-                Label errorLabel;
+                Label errorLabel, runtimeLabel;
                 Parent resultImgRoot = null;
                 Stage stage = new Stage();
 
@@ -206,7 +210,8 @@ public class Run extends Application {
                 vboxContainer = (VBox) resultImgRoot.lookup("#vboxContainer");
                 iView = (ImageView) resultImgRoot.lookup("#imgViewer");
                 kField = (TextField) startRoot.lookup("#kNumber");
-                errorLabel = (Label) startRoot.lookup("#errorRateLabel");
+                errorLabel = (Label) startRoot.lookup("#errorLabel");
+                runtimeLabel = (Label) startRoot.lookup("#runtimeLabel");
 
                 // Set k cluster number from input
                 Run.k = Integer.parseInt(kField.getText());
@@ -216,7 +221,13 @@ public class Run extends Application {
                 try {
                     // Run KMeans on BufferedImage from input
                     KMeans alg = new KMeans();
+
+                    long startTime = System.currentTimeMillis();
+
                     BufferedImage resultImg = alg.perform(alg.load(Run.originalPath), Run.k);
+
+                    long endTime = System.currentTimeMillis();
+
                     alg.save(resultImg, Run.destPath, Run.extension);
 
                     // Cast to FXImage for displaying
@@ -224,6 +235,8 @@ public class Run extends Application {
 
                     // Set result image for error calculation
                     Run.resultImg = shownImg;
+                    Run.width = shownImg.getWidth();
+                    Run.height = shownImg.getHeight();
 
                     // Output approximation error
                     Run.setErrorRate();
@@ -235,13 +248,11 @@ public class Run extends Application {
                     errorBuilder.append(Run.error).append(" %");
 
                     errorLabel.setText(errorBuilder.toString());
+                    runtimeLabel.setText(String.valueOf(TimeUnit.MILLISECONDS.toSeconds(endTime - startTime)) + " seconds");
 
                 } catch(Exception e) {
                     e.printStackTrace();
                 }
-
-                Run.width = shownImg.getWidth();
-                Run.height = shownImg.getHeight();
 
                 vboxContainer.setPrefWidth(0.5 * Run.width);
                 vboxContainer.setPrefHeight(0.5 * Run.height);
@@ -260,6 +271,7 @@ public class Run extends Application {
                     public void handle(WindowEvent windowEvent) {
                         Run.error = 0;
                         errorLabel.setText("0 %");
+                        runtimeLabel.setText("0 seconds");
                     }
                 });
 

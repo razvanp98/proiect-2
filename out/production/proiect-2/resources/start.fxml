@@ -11,17 +11,17 @@
    <children>
       <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="360.0" prefWidth="640.0">
          <children>
-            <Label alignment="CENTER" layoutX="249.0" layoutY="139.0" prefHeight="16.0" prefWidth="36.0" text="Path:">
+            <Label alignment="CENTER" layoutX="221.0" layoutY="119.0" prefHeight="16.0" prefWidth="39.0" text="Path:">
                <font>
                   <Font name="Arial" size="12.0" />
                </font>
             </Label>
-            <TextField id="kNumber" alignment="CENTER" centerShape="false" layoutX="135.0" layoutY="89.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="370.0" promptText="KMeans cluster number" style="-fx-background-color: #00897b; -fx-prompt-text-fill: #ffffff; -fx-text-fill: #ffffff;">
+            <TextField id="kNumber" alignment="CENTER" centerShape="false" layoutX="221.0" layoutY="77.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="200.0" promptText="KMeans cluster number" style="-fx-background-color: #00897b; -fx-prompt-text-fill: #ffffff; -fx-text-fill: #ffffff;">
                <font>
                   <Font name="Microsoft Sans Serif" size="12.0" />
                </font>
             </TextField>
-            <Label layoutX="178.0" layoutY="14.0" prefHeight="51.0" prefWidth="284.0" text=" Image Pallete Reduction" textAlignment="CENTER" AnchorPane.bottomAnchor="295.0" AnchorPane.leftAnchor="178.0" AnchorPane.rightAnchor="178.0" AnchorPane.topAnchor="14.0">
+            <Label alignment="CENTER" layoutX="178.0" layoutY="14.0" prefHeight="51.0" prefWidth="285.0" text=" Image Pallete Reduction" textAlignment="CENTER" AnchorPane.bottomAnchor="295.0" AnchorPane.leftAnchor="178.0" AnchorPane.rightAnchor="177.0" AnchorPane.topAnchor="14.0">
                <font>
                   <Font name="System Bold" size="24.0" />
                </font>
@@ -31,28 +31,48 @@
                   <Font name="Microsoft Sans Serif" size="12.0" />
                </font></Button>
             <Button id="runButton" contentDisplay="CENTER" layoutX="14.0" layoutY="316.0" minHeight="20.0" minWidth="60.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" text="Run KMeans" textAlignment="CENTER" textOverrun="WORD_ELLIPSIS" />
-            <Label id="imgPath" layoutX="303.0" layoutY="139.0" prefHeight="16.0" prefWidth="306.0" text="null" textAlignment="CENTER">
+            <Label id="imgPath" contentDisplay="TOP" layoutX="267.0" layoutY="119.0" prefHeight="16.0" prefWidth="357.0" text="null">
                <font>
                   <Font name="Arial Bold" size="12.0" />
                </font>
             </Label>
             <Button id="exitBtn" contentDisplay="CENTER" layoutX="536.0" layoutY="316.0" minHeight="20.0" minWidth="60.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" style="-fx-background-color: #b71c1c; -fx-text-fill: white; -fx-font-weight: bold;" text="Exit" textAlignment="CENTER" textOverrun="WORD_ELLIPSIS" />
-            <Label alignment="CENTER" layoutX="249.0" layoutY="164.0" prefHeight="16.0" prefWidth="36.0" text="Error:">
+            <Label alignment="CENTER" layoutX="221.0" layoutY="141.0" prefHeight="16.0" prefWidth="39.0" text="Colors:">
                <font>
                   <Font name="Arial" size="12.0" />
                </font>
             </Label>
-            <Label id="errorRateLabel" layoutX="304.0" layoutY="164.0" prefHeight="16.0" prefWidth="175.0" text="0 %">
+            <Label id="distinctColorsLabel" contentDisplay="TOP" layoutX="267.0" layoutY="141.0" prefHeight="16.0" prefWidth="55.0" text="0">
                <font>
                   <Font name="Arial Bold" size="12.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" layoutX="249.0" layoutY="187.0" prefHeight="16.0" prefWidth="83.0" text="Distinct colors:">
+            <Label alignment="CENTER" layoutX="221.0" layoutY="164.0" prefHeight="16.0" prefWidth="39.0" text="Error: ">
                <font>
                   <Font name="Arial" size="12.0" />
                </font>
             </Label>
-            <Label id="distinctColorsLabel" layoutX="332.0" layoutY="187.0" prefHeight="16.0" prefWidth="175.0" text="0">
+            <Label id="errorLabel" contentDisplay="TOP" layoutX="267.0" layoutY="164.0" prefHeight="16.0" prefWidth="200.0" text="0 %">
+               <font>
+                  <Font name="Arial Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label id="size" alignment="CENTER" layoutX="221.0" layoutY="186.0" prefHeight="16.0" prefWidth="39.0" text="Size:">
+               <font>
+                  <Font name="Arial" size="12.0" />
+               </font>
+            </Label>
+            <Label id="sizeLabel" contentDisplay="TOP" layoutX="267.0" layoutY="186.0" prefHeight="16.0" prefWidth="200.0" text="0">
+               <font>
+                  <Font name="Arial Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label id="size" alignment="CENTER" layoutX="221.0" layoutY="272.0" prefHeight="16.0" prefWidth="61.0" text="Runtime:">
+               <font>
+                  <Font name="Arial" size="12.0" />
+               </font>
+            </Label>
+            <Label id="runtimeLabel" contentDisplay="TOP" layoutX="282.0" layoutY="272.0" prefHeight="16.0" prefWidth="200.0" text="0 seconds">
                <font>
                   <Font name="Arial Bold" size="12.0" />
                </font>
