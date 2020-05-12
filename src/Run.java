@@ -197,7 +197,7 @@ public class Run extends Application {
                 Scene scene;
                 TextField kField; // Load below
                 ImageView iView; // Load below
-                Label errorLabel, runtimeLabel;
+                Label errorLabel, runtimeLabel, iterationsLabel;
                 Parent resultImgRoot = null;
                 Stage stage = new Stage();
 
@@ -212,6 +212,7 @@ public class Run extends Application {
                 kField = (TextField) startRoot.lookup("#kNumber");
                 errorLabel = (Label) startRoot.lookup("#errorLabel");
                 runtimeLabel = (Label) startRoot.lookup("#runtimeLabel");
+                iterationsLabel = (Label) startRoot.lookup("#iterationsLabel");
 
                 // Set k cluster number from input
                 Run.k = Integer.parseInt(kField.getText());
@@ -249,6 +250,7 @@ public class Run extends Application {
 
                     errorLabel.setText(errorBuilder.toString());
                     runtimeLabel.setText(String.valueOf(TimeUnit.MILLISECONDS.toSeconds(endTime - startTime)) + " seconds");
+                    iterationsLabel.setText(String.valueOf(alg.getIterations()));
 
                 } catch(Exception e) {
                     e.printStackTrace();
@@ -272,6 +274,7 @@ public class Run extends Application {
                         Run.error = 0;
                         errorLabel.setText("0 %");
                         runtimeLabel.setText("0 seconds");
+                        iterationsLabel.setText("0");
                     }
                 });
 

@@ -77,6 +77,16 @@
                   <Font name="Arial Bold" size="12.0" />
                </font>
             </Label>
+            <Label id="size" alignment="CENTER" layoutX="213.0" layoutY="209.0" prefHeight="16.0" prefWidth="55.0" text="Iterations:">
+               <font>
+                  <Font name="Arial" size="12.0" />
+               </font>
+            </Label>
+            <Label id="iterationsLabel" contentDisplay="TOP" layoutX="274.0" layoutY="209.0" prefHeight="16.0" prefWidth="200.0" text="0">
+               <font>
+                  <Font name="Arial Bold" size="12.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
    </children>
