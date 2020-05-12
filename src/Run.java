@@ -18,11 +18,8 @@ import javafx.stage.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.text.DecimalFormat;
 import java.util.concurrent.TimeUnit;
 
 public class Run extends Application {
