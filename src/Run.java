@@ -265,7 +265,7 @@ public class Run extends Application {
                 iView.setImage(shownImg);
 
                 scene = new Scene(resultImgRoot, 0.5 * Run.width, 0.5 * Run.height);
-                stage.setTitle("Result Image");
+                stage.setTitle("Result Image (K = " + Run.k + ")");
                 stage.setScene(scene);
 
                 stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
