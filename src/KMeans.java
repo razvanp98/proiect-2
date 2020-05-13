@@ -7,6 +7,7 @@ import java.util.Random;
 
 public class KMeans {
     private ArrayList<Cluster> clusters;
+    private int iterations = 0;
 
     public KMeans() {
         this.clusters = new ArrayList<>();
@@ -25,7 +26,7 @@ public class KMeans {
 
         while (movedCluster) {
             movedCluster = false;
-
+            
             for (int j = 0; j < height; j++) {
                 for (int i = 0; i < width; i++) {
 
@@ -44,6 +45,7 @@ public class KMeans {
 
                         movedCluster = true; // Continua bucla pana nu se mai observa nicio modificare
                     }
+                    this.iterations++;
                 }
             }
         }
@@ -66,14 +68,15 @@ public class KMeans {
         Random rand = new Random();
 
         int x = 0, y = 0;
-        int stepX = rand.nextInt(img.getWidth() - 1) / k;
-        int stepY = rand.nextInt(img.getHeight() - 1) / k;
 
         for (int i = 0; i < k; i++) {
             if(x == img.getWidth() - 1 || y == img.getHeight() - 1) {
                 x = 0;
                 y = 0;
             }
+
+            int stepX = rand.nextInt(img.getWidth() - 1) / k;
+            int stepY = rand.nextInt(img.getHeight() - 1) / k;
 
             x += stepX;
             y += stepY;
@@ -117,5 +120,13 @@ public class KMeans {
         }
 
         return result;
+    }
+
+    public int getIterations() {
+        return this.iterations;
+    }
+
+    public int resetIterations() {
+       return this.iterations = 0;
     }
 }
